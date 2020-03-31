@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -66,7 +67,7 @@ public class Ej1 {
                 }
             } catch (Excepcion1Ruta er) {
                 System.out.println(er.getMessage());
-                escribirErrores(er.getMessage());
+                escribirErrores(er.getMessage(), Arrays.toString(er.getStackTrace()));
             }
         }
     }
@@ -80,7 +81,7 @@ public class Ej1 {
                 rutas[0] = introducirRuta();
             } catch (Excepcion1Fichero ef) {
                 System.out.println(ef.getMessage());
-                escribirErrores(ef.getMessage());
+                escribirErrores(ef.getMessage(), Arrays.toString(ef.getStackTrace()));
             }
         } while (rutas[0] == null);
         //Aquí apartado b: excepción por si el fichero de entrada no existe. Lo quiero elevar al main.
@@ -95,7 +96,7 @@ public class Ej1 {
                 rutas[1] = introducirRuta();
             } catch (Excepcion1Fichero ef) {
                 System.out.println(ef.getMessage());
-                escribirErrores(ef.getMessage());
+                escribirErrores(ef.getMessage(), Arrays.toString(ef.getStackTrace()));
             }
         } while (rutas[1] == null);
         return rutas;
@@ -213,8 +214,7 @@ public class Ej1 {
         }
     }
 
-    public static void escribirErrores(String texto) {
-        //TODO: investigar lo de la pila ????
+    public static void escribirErrores(String texto, String traza) {
         try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores.txt", true))) {
             //Para trabajar con fechas, ver: https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
             String pattern = "MM/dd/yyyy HH:mm:ss";
@@ -222,9 +222,8 @@ public class Ej1 {
             Date fechahora = Calendar.getInstance().getTime();
             String fechahoraString = df.format(fechahora);
             writerMejorado.write(fechahoraString);
-            writerMejorado.write(": ");
-            writerMejorado.write(texto);
-            writerMejorado.write("\n");
+            writerMejorado.write(": " + texto);
+            writerMejorado.write("\n" + traza + "\n\n");            
         } catch (IOException eio) {
             System.out.println("IOException. Error al leer el archivo.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
         }

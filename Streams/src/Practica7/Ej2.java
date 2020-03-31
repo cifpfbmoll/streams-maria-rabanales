@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
@@ -39,7 +40,6 @@ public class Ej2 {
             System.out.println("  1- Lectura y escritura del fichero de cartelera byte a byte.");
             System.out.println("  2- Lectura y escritura de fichero de cartelera carácter a carácter.");
             System.out.println("  3- Lectura y escritura de fichero línea a línea con buffers.");
-            System.out.println("  4- Tratamiento de objetos.");
             System.out.println("  0- Salir.");
             System.out.println("* * * * * * * * * * * *");
             System.out.println("OPCIÓN ELEGIDA:");
@@ -57,9 +57,6 @@ public class Ej2 {
                     case "3":
                         operarConBuffers();
                         break;
-                    case "4":
-                        tratarObjetos();
-                        break;
                     case "0":
                         salir = true;
                         System.out.println("ADIÓS.");
@@ -70,7 +67,7 @@ public class Ej2 {
                 }
             } catch (Excepcion1Ruta er) {
                 System.out.println(er.getMessage());
-                escribirErrores(er.getMessage());
+                escribirErrores(er.getMessage(), Arrays.toString(er.getStackTrace()));
             }
         }
     }
@@ -84,7 +81,7 @@ public class Ej2 {
                 rutas[0] = introducirRuta();
             } catch (Excepcion1Fichero ef) {
                 System.out.println(ef.getMessage());
-                escribirErrores(ef.getMessage());
+                escribirErrores(ef.getMessage(), Arrays.toString(ef.getStackTrace()));
             }
         } while (rutas[0] == null);
         //Aquí apartado b: excepción por si el fichero de entrada no existe. Lo quiero elevar al main.
@@ -99,7 +96,7 @@ public class Ej2 {
                 rutas[1] = introducirRuta();
             } catch (Excepcion1Fichero ef) {
                 System.out.println(ef.getMessage());
-                escribirErrores(ef.getMessage());
+                escribirErrores(ef.getMessage(), Arrays.toString(ef.getStackTrace()));
             }
         } while (rutas[1] == null);
         return rutas;
@@ -217,45 +214,7 @@ public class Ej2 {
         }
     }
 
-    public static void tratarObjetos() {
-        boolean salir2 = false;
-        while (salir2 == false) {
-            System.out.println("MENU DE TRATAMIENTO DE OBJETOS:");
-            System.out.println("* * * * * * * * * * * *");
-            System.out.println("  1- Lectura línea a línea y escritura con objetos.");
-            System.out.println("  2- Lectura de objetos y escritura de objetos.");
-            System.out.println("  3- Lectura de objetos y escritura por consola.");
-            System.out.println("  4- Lectura por consola y escritura de objetos.");
-            System.out.println("  0- Volver al menú principal.");
-            System.out.println("* * * * * * * * * * * *");
-            System.out.println("OPCIÓN ELEGIDA:");
-            String opcionInicial = lector.nextLine();
-            System.out.println("* * * * * * * * * * * *");
-
-            switch (opcionInicial) {
-                case "1":
-                    //TODO
-                    break;
-                case "2":
-                    //TODO
-                    break;
-                case "3":
-                    //TODO
-                    break;
-                case "4":
-                    //TODO
-                    break;
-                case "0":
-                    salir2 = true;
-                    break;
-                default:
-                    System.out.println("  Opción imposible.");
-            }
-        }
-    }
-    
-    public static void escribirErrores(String texto) {
-        //TODO: investigar lo de la pila ????
+    public static void escribirErrores(String texto, String traza) {
         try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores.txt", true))) {
             //Para trabajar con fechas, ver: https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
             String pattern = "MM/dd/yyyy HH:mm:ss";
@@ -263,9 +222,8 @@ public class Ej2 {
             Date fechahora = Calendar.getInstance().getTime();
             String fechahoraString = df.format(fechahora);
             writerMejorado.write(fechahoraString);
-            writerMejorado.write(": ");
-            writerMejorado.write(texto);
-            writerMejorado.write("\n");
+            writerMejorado.write(": " + texto);
+            writerMejorado.write("\n" + traza + "\n\n");            
         } catch (IOException eio) {
             System.out.println("IOException. Error al leer el archivo.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
         }

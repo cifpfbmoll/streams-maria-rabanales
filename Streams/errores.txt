@@ -1,2 +1,14 @@
 03/30/2020 21:43:18: La ruta del fichero de origen no es válida.
 03/30/2020 21:43:35: No has introducido una ruta.
+03/31/2020 10:48:58:
+[Practica7.Ej1.introducirRuta(Ej1.java:109), Practica7.Ej1.solicitarRutas(Ej1.java:81), Practica7.Ej1.operarEnCaracter(Ej1.java:152), Practica7.Ej1.menuInicial(Ej1.java:55), Practica7.Ej1.main(Ej1.java:30)] - No has introducido una ruta.
+
+03/31/2020 10:49:01:
+[Practica7.Ej1.solicitarRutas(Ej1.java:90), Practica7.Ej1.operarEnCaracter(Ej1.java:152), Practica7.Ej1.menuInicial(Ej1.java:55), Practica7.Ej1.main(Ej1.java:30)] - La ruta del fichero de origen no es válida.
+
+03/31/2020 10:50:57: No has introducido una ruta.
+[Practica7.Ej1.introducirRuta(Ej1.java:109), Practica7.Ej1.solicitarRutas(Ej1.java:81), Practica7.Ej1.operarEnCaracter(Ej1.java:152), Practica7.Ej1.menuInicial(Ej1.java:55), Practica7.Ej1.main(Ej1.java:30)]
+
+03/31/2020 10:51:01: La ruta del fichero de origen no es válida.
+[Practica7.Ej1.solicitarRutas(Ej1.java:90), Practica7.Ej1.operarEnCaracter(Ej1.java:152), Practica7.Ej1.menuInicial(Ej1.java:55), Practica7.Ej1.main(Ej1.java:30)]
+
