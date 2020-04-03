@@ -252,7 +252,7 @@ public class Ej2 {
     }
 
     public static void escribirErrores(String texto, String traza) {
-        try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores.txt", true))) {
+        try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores2.txt", true))) {
             //Para trabajar con fechas, ver: https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
             String pattern = "MM/dd/yyyy HH:mm:ss";
             DateFormat df = new SimpleDateFormat(pattern);

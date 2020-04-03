@@ -2,7 +2,7 @@ package Practica7;
 
 import java.util.ArrayList;
 
-public class Cartelera {
+public class Pelicula {
 
     //Atributos:
     private String              titulo;
@@ -15,10 +15,10 @@ public class Cartelera {
     //TODO: no habrá algun tipo de atributo hora:min? Investigar.
 
     //Constructores:
-    public Cartelera() {
+    public Pelicula() {
     }
 
-    public Cartelera(String titulo, int estreno, String director, int duracion, String sinopsis, String sesion) {
+    public Pelicula(String titulo, int estreno, String director, int duracion, String sinopsis, String sesion) {
         this.titulo = titulo;
         this.estreno = estreno;
         this.director = director;
