@@ -1,6 +1,6 @@
 /*
 Ejercicio 2 de Streams por María Rabanales.
-Incluye las clases Ej2, Cartelera, Excepcion1Fichero y Excepcion1Ruta.
+Incluye las clases Ej2, Cartelera, Actor, Excepcion1Fichero y Excepcion1Ruta.
  */
 package Practica7;
 
@@ -40,6 +40,7 @@ public class Ej2 {
             System.out.println("  1- Lectura y escritura del fichero de cartelera byte a byte.");
             System.out.println("  2- Lectura y escritura de fichero de cartelera carácter a carácter.");
             System.out.println("  3- Lectura y escritura de fichero línea a línea con buffers.");
+            System.out.println("  4- Tratamiento de objetos.");
             System.out.println("  0- Salir.");
             System.out.println("* * * * * * * * * * * *");
             System.out.println("OPCIÓN ELEGIDA:");
@@ -57,6 +58,9 @@ public class Ej2 {
                     case "3":
                         operarConBuffers();
                         break;
+                    case "4":
+                        tratarObjetos();
+                        break;
                     case "0":
                         salir = true;
                         System.out.println("ADIÓS.");
@@ -68,6 +72,39 @@ public class Ej2 {
             } catch (Excepcion1Ruta er) {
                 System.out.println(er.getMessage());
                 escribirErrores(er.getMessage(), Arrays.toString(er.getStackTrace()));
+            }
+        }
+    }
+
+    public static void tratarObjetos() {
+        boolean salir2 = false;
+        while (salir2 == false) {
+            System.out.println("* * * * * * * * * * * *");
+            System.out.println("TRATAMIENTO DE OBJETOS:");
+            System.out.println("  1- Lectura línea a línea y escritura de objetos.");
+            System.out.println("  2- Lectura de objetos y escritura de objetos.");
+            System.out.println("  3- Lectura de objetos y escritura por consola.");
+            System.out.println("  0- Volver al menú principal.");
+            System.out.println("* * * * * * * * * * * *");
+            System.out.println("OPCIÓN ELEGIDA:");
+            String opcionObjetos = lector.nextLine();
+            System.out.println("* * * * * * * * * * * *");
+
+            switch (opcionObjetos) {
+                case "1":
+                    //TODO
+                    break;
+                case "2":
+                    //TODO
+                    break;
+                case "3":
+                    //TODO
+                    break;
+                case "0":
+                    salir2 = true;
+                    break;
+                default:
+                    System.out.println("  Opción imposible.");
             }
         }
     }
@@ -223,7 +260,7 @@ public class Ej2 {
             String fechahoraString = df.format(fechahora);
             writerMejorado.write(fechahoraString);
             writerMejorado.write(": " + texto);
-            writerMejorado.write("\n" + traza + "\n\n");            
+            writerMejorado.write("\n" + traza + "\n\n");
         } catch (IOException eio) {
             System.out.println("IOException. Error al leer el archivo.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
         }
