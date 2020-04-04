@@ -19,6 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+
+//TODO archivos .obj? ??????
 public class Ej2 {
 
     //Creo los dos elementos que usaré globalmente; en el string juego con los saltos de línea para facilitarme el print
@@ -45,7 +47,6 @@ public class Ej2 {
             System.out.println("* * * * * * * * * * * *");
             System.out.println("OPCIÓN ELEGIDA:");
             String opcionInicial = lector.nextLine();
-            System.out.println("* * * * * * * * * * * *");
 
             try {
                 switch (opcionInicial) {
@@ -59,7 +60,7 @@ public class Ej2 {
                         operarConBuffers();
                         break;
                     case "4":
-                        tratarObjetos();
+                        menuTratarObjetos();
                         break;
                     case "0":
                         salir = true;
@@ -76,10 +77,9 @@ public class Ej2 {
         }
     }
 
-    public static void tratarObjetos() {
+    public static void menuTratarObjetos() {
         boolean salir2 = false;
         while (salir2 == false) {
-            System.out.println("* * * * * * * * * * * *");
             System.out.println("TRATAMIENTO DE OBJETOS:");
             System.out.println("  1- Lectura línea a línea y escritura de objetos.");
             System.out.println("  2- Lectura de objetos y escritura de objetos.");
@@ -90,21 +90,26 @@ public class Ej2 {
             String opcionObjetos = lector.nextLine();
             System.out.println("* * * * * * * * * * * *");
 
-            switch (opcionObjetos) {
-                case "1":
-                    //TODO
-                    break;
-                case "2":
-                    //TODO
-                    break;
-                case "3":
-                    //TODO
-                    break;
-                case "0":
-                    salir2 = true;
-                    break;
-                default:
-                    System.out.println("  Opción imposible.");
+            try {
+                switch (opcionObjetos) {
+                    case "1":
+                        pasarLineaAObjeto();
+                        break;
+                    case "2":
+                        pasarObjetoAObjeto();
+                        break;
+                    case "3":
+                        pasarObjetoAConsola();
+                        break;
+                    case "0":
+                        salir2 = true;
+                        break;
+                    default:
+                        System.out.println("  Opción imposible.");
+                }
+            } catch (Excepcion1Ruta er) {
+                System.out.println(er.getMessage());
+                escribirErrores(er.getMessage(), Arrays.toString(er.getStackTrace()));
             }
         }
     }
@@ -137,6 +142,20 @@ public class Ej2 {
             }
         } while (rutas[1] == null);
         return rutas;
+    }
+
+    public static String solicitarUnaRuta() throws Excepcion1Ruta {
+        String ruta = "";
+        System.out.println("Introducir ruta del archivo deseado:");
+        do {
+            try {
+                ruta = introducirRuta();
+            } catch (Excepcion1Fichero ef) {
+                System.out.println(ef.getMessage());
+                escribirErrores(ef.getMessage(), Arrays.toString(ef.getStackTrace()));
+            }
+        } while (ruta.equals(""));
+        return ruta;
     }
 
     //Aquí apartado c: excepción informativa para el caso en el que un fichero no sea informado. 
@@ -180,7 +199,7 @@ public class Ej2 {
             textToByte = TEXTOUTPUT[TEXTOUTPUT.length - 1].getBytes();
             fout.write(textToByte);
         } catch (IOException eio) {
-            System.out.println("IOException. Error al leer el archivo.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
+            System.out.println("IOException. Error al leer el archivo.");
         }
         //Tiene autoclosure; no cierro streams.
     }
@@ -211,7 +230,7 @@ public class Ej2 {
             //Por último añado el footer final:      
             writer.write(TEXTOUTPUT[TEXTOUTPUT.length - 1]);
         } catch (IOException eio) {
-            System.out.println("IOException. Error al leer el archivo.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
+            System.out.println("IOException. Error al leer el archivo.");
         }
     }
 
@@ -247,7 +266,42 @@ public class Ej2 {
             //Por último añado el footer final:      
             writerMejorado.write(TEXTOUTPUT[TEXTOUTPUT.length - 1]);
         } catch (IOException eio) {
-            System.out.println("IOException. Error al leer el archivo.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
+            System.out.println("IOException. Error al leer el archivo.");
+        }
+    }
+
+    //Aquí los tres métodos específicos del apartado 2, que a su vez llaman a métodos específicos de la clase Película
+    public static void pasarLineaAObjeto() throws Excepcion1Ruta {
+        String destino = solicitarUnaRuta();
+        try {
+            Pelicula p1 = new Pelicula();
+            p1.introducirPelicula();
+            p1.setEscritura(destino);
+        } catch (IOException eio) {
+            System.out.println("IOException. Error al leer el archivo.");
+        }
+    }
+
+    public static void pasarObjetoAObjeto() throws Excepcion1Ruta {
+        String rutas[] = solicitarRutas();
+        try {
+            Pelicula.getLecturaSetEscritura(rutas[0], rutas[1]);
+            System.out.println("Operación realizada con éxito.");
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println("ClassNotFoundException. Error al leer el objeto.");
+        } catch (IOException eio) {
+            System.out.println("IOException. Error al leer el archivo.");
+        }
+    }
+
+    public static void pasarObjetoAConsola() throws Excepcion1Ruta {
+        String origen = solicitarUnaRuta();
+        try {
+            Pelicula.getLectura(origen);
+        } catch (ClassNotFoundException cnfe) {
+            System.out.println("ClassNotFoundException. Error al leer el objeto.");
+        } catch (IOException eio) {
+            System.out.println("IOException. Error al leer el archivo.");
         }
     }
 
@@ -262,7 +316,7 @@ public class Ej2 {
             writerMejorado.write(": " + texto);
             writerMejorado.write("\n" + traza + "\n\n");
         } catch (IOException eio) {
-            System.out.println("IOException. Error al leer el archivo.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
+            System.out.println("IOException. Error al leer el archivo.");
         }
     }
 }
