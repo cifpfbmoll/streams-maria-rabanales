@@ -1,6 +1,7 @@
 /*
 Ejercicio 3 de Streams por María Rabanales.
-Incluye las clases: Ej3 y Alumno. Incluye la excepción Excepción3Menor pero como no tengo en ningún momento el atributo edad no la puedo lanzar.
+Incluye las clases: Ej3 y Alumno. 
+Incluye la excepción Excepción3Menor pero como no existe el atributo edad no la puedo lanzar.
  */
 package Practica7;
 
@@ -70,7 +71,7 @@ public class Ej3 {
     }
 
     public static void escribirErrores(String texto, String traza) {
-        try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores3.txt", true))) {
+        try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores.txt", true))) {
             String pattern = "MM/dd/yyyy HH:mm:ss";
             DateFormat df = new SimpleDateFormat(pattern);
             Date fechahora = Calendar.getInstance().getTime();
@@ -79,7 +80,7 @@ public class Ej3 {
             writerMejorado.write(": " + texto);
             writerMejorado.write("\n" + traza + "\n\n");
         } catch (IOException eio) {
-            System.out.println("IOException. Error al leer el archivo errores3.txt.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
+            System.out.println("IOException. Error al leer el archivo errores.txt.");         //TODO: lo añado porque me lo exige el IDE; ¿por qué?
         }
     }
 }

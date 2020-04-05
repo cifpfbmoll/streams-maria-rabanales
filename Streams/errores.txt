@@ -12,3 +12,6 @@
 03/31/2020 10:51:01: La ruta del fichero de origen no es válida.
 [Practica7.Ej1.solicitarRutas(Ej1.java:90), Practica7.Ej1.operarEnCaracter(Ej1.java:152), Practica7.Ej1.menuInicial(Ej1.java:55), Practica7.Ej1.main(Ej1.java:30)]
 
+04/05/2020 17:40:05: No has introducido una ruta.
+[Practica7.Ej1.introducirRuta(Ej1.java:109), Practica7.Ej1.solicitarRutas(Ej1.java:81), Practica7.Ej1.operarEnBytes(Ej1.java:115), Practica7.Ej1.menuInicial(Ej1.java:52), Practica7.Ej1.main(Ej1.java:30)]
+

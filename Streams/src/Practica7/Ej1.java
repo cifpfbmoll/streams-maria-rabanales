@@ -89,11 +89,11 @@ public class Ej1 {
         if (!archivo.exists()) {
             throw new Excepcion1Ruta();
         }
-        System.out.println("                   Recordar: es destino.txt");
         System.out.println("Introducir ruta del archivo de destino:");
         do {
             try {
                 rutas[1] = introducirRuta();
+                File destino = new File(rutas[1]);
             } catch (Excepcion1Fichero ef) {
                 System.out.println(ef.getMessage());
                 escribirErrores(ef.getMessage(), Arrays.toString(ef.getStackTrace()));

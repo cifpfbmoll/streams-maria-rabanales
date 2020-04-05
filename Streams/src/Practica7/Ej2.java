@@ -116,7 +116,7 @@ public class Ej2 {
 
     public static String[] solicitarRutas() throws Excepcion1Ruta {
         String[] rutas = new String[2];
-        System.out.println("                   Recordar: es origen.txt");
+        System.out.println("                   Recordar: es origen.txt o cartelera.txt");
         System.out.println("Introducir ruta del archivo de origen:");
         do {
             try {
@@ -131,11 +131,11 @@ public class Ej2 {
         if (!archivo.exists()) {
             throw new Excepcion1Ruta();
         }
-        System.out.println("                   Recordar: es destino.txt");
         System.out.println("Introducir ruta del archivo de destino:");
         do {
             try {
                 rutas[1] = introducirRuta();
+                File destino = new File(rutas[1]);
             } catch (Excepcion1Fichero ef) {
                 System.out.println(ef.getMessage());
                 escribirErrores(ef.getMessage(), Arrays.toString(ef.getStackTrace()));
@@ -306,7 +306,7 @@ public class Ej2 {
     }
 
     public static void escribirErrores(String texto, String traza) {
-        try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores2.txt", true))) {
+        try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter("errores.txt", true))) {
             //Para trabajar con fechas, ver: https://stackoverflow.com/questions/5683728/convert-java-util-date-to-string
             String pattern = "MM/dd/yyyy HH:mm:ss";
             DateFormat df = new SimpleDateFormat(pattern);
