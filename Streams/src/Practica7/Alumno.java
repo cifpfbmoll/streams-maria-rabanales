@@ -19,7 +19,6 @@ public class Alumno {
     private int         notaFOL;
     //Guardo las convalidaciones en array por el orden de aparición.
     private boolean[]   convalidadas = {false, false, false, false, false, false};
-    //todo añadir a constructores, getters y setters
 
     //Constructores:
     public Alumno() {
@@ -38,8 +37,44 @@ public class Alumno {
     }
 
     //Métodos:
-    public static void convertirAlumno() {
-        //todo
+    public static Alumno convertirAlumno(String[] alumnoArray) {
+        Alumno a1 = new Alumno();
+        a1.setNombre(alumnoArray[0]);
+        a1.setApellido1(alumnoArray[1]);
+        a1.setApellido2(alumnoArray[2]);
+        //Entiendo que todas las convalidaciones son a nota 5.
+        for (int i = 3; i < 9; i++) {
+            String nota = alumnoArray[i];
+            if (nota.equals("c-5")) {
+                nota = "5";
+                a1.convalidadas[i-3] = true;
+            }
+            int notaAdaptada = Integer.parseInt(nota);
+            switch (i) {
+                case 3:
+                    a1.setNotaLM(notaAdaptada);
+                    break;
+                case 4:
+                    a1.setNotaProg(notaAdaptada);
+                    break;
+                case 5:
+                    a1.setNotaED(notaAdaptada);
+                    break;
+                case 6:
+                    a1.setNotaBD(notaAdaptada);
+                    break;
+                case 7:
+                    a1.setNotaSI(notaAdaptada);
+                    break;
+                case 8:
+                    a1.setNotaLM(notaAdaptada);
+                    break;
+                case 9:
+                    a1.setNotaFOL(notaAdaptada);
+                    break;
+            }
+        }
+        return a1;
     }
     
     public String crearArchivoDeAlumno() throws IOException {
@@ -53,25 +88,47 @@ public class Alumno {
     
     public void rellenarArchivoDeAlumno(String ruta) {
         try (BufferedWriter writerMejorado = new BufferedWriter(new FileWriter(ruta))) {
-            boolean eof = false;
+            int[] notas = {this.getNotaLM(), this.getNotaProg(), this.getNotaED(), this.getNotaBD(), this.getNotaSI(), this.getNotaFOL()};
+            int[] estadisticas = getEstadisticas(notas);
             //TODO seguro que lo quiero en buffer?
             writerMejorado.write("---------------------------------------------\nBoletín de notas CIFP FBMOLL\n" +
                     "---------------------------------------------\nAlumno: " + this.getNombre() + " " + 
                     this.getApellido1() + " " + this.getApellido2() + "\n---------------------------------------------" +
-                    "\nMódulo                            Nota\n------------------------------   -------\n");
-            writerMejorado.write("Lenguaje de marcas                  " + this.getNotaLM() + "\n");
-            writerMejorado.write("Programación                        " + this.getNotaProg()+ "\n");
-            writerMejorado.write("Entornos de desarrollo              " + this.getNotaED() + "\n");
-            writerMejorado.write("Base de datos                       " + this.getNotaBD() + "\n");
-            writerMejorado.write("Sistemas informáticos               " + this.getNotaSI() + "\n");
-            writerMejorado.write("FOL                                 " + this.getNotaFOL() + "\n");
+                    "\nMódulo                             Nota\n------------------------------   -------\n");
+            writerMejorado.write("Lenguaje de marcas                   " + notas[0] + "\n");
+            writerMejorado.write("Programación                         " + notas[1] + "\n");
+            writerMejorado.write("Entornos de desarrollo               " + notas[2] + "\n");
+            writerMejorado.write("Base de datos                        " + notas[3] + "\n");
+            writerMejorado.write("Sistemas informáticos                " + notas[4] + "\n");
+            writerMejorado.write("FOL                                  " + notas[5] + "\n");
             writerMejorado.write("---------------------------------------------\n");
+            writerMejorado.write("Nº de módulos aprobados:             " + estadisticas[0] + "\n");
+            writerMejorado.write("Nº de módulos suspendidos:           " + estadisticas[1] + "\n");
+            writerMejorado.write("Nº de módulos convalidados:          " + estadisticas[2] + "\n");
+            writerMejorado.write("---------------------------------------------\n\n");
+            writerMejorado.write("Fecha: " + Ej3.getFecha() + "\nLugar: Palma de Mallorca");
             //TODO acabar
         } catch (IOException eio) {
             System.out.println("IOException. Error al leer el archivo.");         
             //TODO: al main
         }
-        //TODO
+    }
+    
+    public int[] getEstadisticas(int[] notas) {
+        int[] estadisticas = {0, 0, 0};         //aprobados, suspensos, convalidados
+        for (int nota : notas) {
+            if (nota < 5) {
+                estadisticas[1]++;
+            } else {
+                estadisticas[0]++;
+            }
+        }
+        for (boolean convalidacion : this.convalidadas) {
+            if (convalidacion == true) {
+                estadisticas[2]++;
+            }
+        }
+        return estadisticas;
     }
 
     //Getters y setters:
@@ -145,6 +202,14 @@ public class Alumno {
 
     public void setNotaFOL(int notaFOL) {
         this.notaFOL = notaFOL;
+    }
+
+    public boolean[] getConvalidadas() {
+        return convalidadas;
+    }
+
+    public void setConvalidadas(boolean[] convalidadas) {
+        this.convalidadas = convalidadas;
     }
 
 }
